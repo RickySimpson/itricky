@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Ricky — Managed IT Services</title>
+  <meta name="description" content="IT Ricky provides enterprise-grade managed IT services, cybersecurity, and cloud solutions for growing businesses. Reliable. Responsive. Results-driven." />
+  <meta name="keywords" content="managed IT services, MSP, cybersecurity, cloud solutions, IT support, help desk" />
+  <meta property="og:title" content="IT Ricky — Managed IT Services" />
+  <meta property="og:description" content="Enterprise-grade IT management for businesses that can't afford downtime." />
+  <meta property="og:url" content="https://itricky.com" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://itricky.com" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & TOKENS ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0b0f1a;
+      --surface:    #111827;
+      --card:       #161d2e;
+      --border:     rgba(255,255,255,.07);
+      --accent:     #00d4ff;
+      --accent-dim: rgba(0,212,255,.12);
+      --accent-glow:rgba(0,212,255,.35);
+      --text:       #e4e8f0;
+      --muted:      #8899aa;
+      --white:      #ffffff;
+      --ff-head:    'Syne', sans-serif;
+      --ff-body:    'DM Sans', sans-serif;
+      --radius:     10px;
+      --trans:      .25s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--text);
+      font-family: var(--ff-body);
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ──────────────────────── */
+    body::before {
+      content:'';
+      position:fixed; inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:999;
+    }
+
+    /* ── UTILITY ────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,5vw,60px); }
+    .accent { color: var(--accent); }
+    .tag {
+      display: inline-block;
+      font-family: var(--ff-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,212,255,.25);
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── NAV ────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 0;
+      transition: background var(--trans), padding var(--trans), backdrop-filter var(--trans);
+    }
+    nav.scrolled {
+      background: rgba(11,15,26,.88);
+      backdrop-filter: blur(16px);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--ff-head);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800; color: var(--ink);
+    }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .01em;
+      transition: color var(--trans);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .btn-nav {
+      background: var(--accent);
+      color: var(--ink) !important;
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 700 !important;
+      transition: opacity var(--trans), transform var(--trans) !important;
+    }
+    .btn-nav:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--trans); }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; top: 65px;
+      background: rgba(11,15,26,.97); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+      z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 22px; font-family: var(--ff-head); font-weight: 700; }
+    .mobile-menu a.btn-nav { background: var(--accent); color: var(--ink); padding: 14px 36px; border-radius: 10px; font-size: 18px; }
+
+    /* ── HERO ───────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .hero-eyebrow { margin-bottom: 22px; }
+    .hero-h1 {
+      font-family: var(--ff-head);
+      font-size: clamp(38px, 5vw, 66px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .hero-h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 44px;
+      line-height: 1.75;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent);
+      color: var(--ink);
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: opacity var(--trans), transform var(--trans), box-shadow var(--trans);
+      box-shadow: 0 0 0 0 var(--accent-glow);
+    }
+    .btn-primary:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--ff-head);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color var(--trans), color var(--trans), transform var(--trans);
+    }
+    .btn-ghost:hover { border-color: rgba(0,212,255,.4); color: var(--accent); transform: translateY(-2px); }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-orb {
+      width: clamp(280px,38vw,520px);
+      height: clamp(280px,38vw,520px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 40%, rgba(0,212,255,.18) 0%, rgba(0,212,255,.04) 45%, transparent 70%);
+      border: 1px solid rgba(0,212,255,.15);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: pulse-orb 6s ease-in-out infinite;
+    }
+    @keyframes pulse-orb {
+      0%,100% { box-shadow: 0 0 60px rgba(0,212,255,.08), inset 0 0 60px rgba(0,212,255,.04); }
+      50%      { box-shadow: 0 0 120px rgba(0,212,255,.18), inset 0 0 80px rgba(0,212,255,.08); }
+    }
+    .orb-ring {
+      position: absolute; border-radius: 50%; border: 1px dashed rgba(0,212,255,.12);
+      animation: spin-ring linear infinite;
+    }
+    .orb-ring-1 { width: 110%; height: 110%; animation-duration: 30s; }
+    .orb-ring-2 { width: 130%; height: 130%; animation-duration: 50s; animation-direction: reverse; }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
+    .orb-inner {
+      text-align: center; z-index: 1;
+    }
+    .orb-icon { font-size: 64px; line-height: 1; margin-bottom: 12px; filter: drop-shadow(0 0 20px var(--accent-glow)); }
+    .orb-stat { font-family: var(--ff-head); font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+
+    /* Floating badges */
+    .badge {
+      position: absolute;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 500;
+      white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+      animation: float linear infinite;
+    }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; box-shadow: 0 0 8px #22c55e; }
+    .badge-dot.warn { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .badge-1 { top: 10%; left: -10%; animation-duration: 7s; animation-delay: 0s; }
+    .badge-2 { bottom: 15%; right: -8%; animation-duration: 9s; animation-delay: -3s; }
+    .badge-3 { top: 50%; left: -14%; animation-duration: 11s; animation-delay: -6s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0px); }
+      50%      { transform: translateY(-12px); }
+    }
+
+    /* Hero BG glow */
+    .hero-glow {
+      position: absolute; border-radius: 50%; pointer-events: none; filter: blur(120px);
+    }
+    .glow-1 { width: 600px; height: 600px; top: -200px; right: -100px; background: rgba(0,212,255,.06); }
+    .glow-2 { width: 400px; height: 400px; bottom: -100px; left: -50px; background: rgba(0,100,200,.07); }
+
+    /* Hero trust bar */
+    .hero-trust {
+      display: flex; align-items: center; gap: 28px; margin-top: 52px; flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .trust-icon { color: var(--accent); font-size: 16px; }
+
+    /* ── LOGOS ──────────────────────────────────────── */
+    #logos { padding: 56px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .logos-label { text-align: center; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-family: var(--ff-head); font-weight: 600; margin-bottom: 32px; }
+    .logos-track { display: flex; align-items: center; justify-content: center; gap: 52px; flex-wrap: wrap; }
+    .logo-item { font-family: var(--ff-head); font-weight: 700; font-size: 18px; color: rgba(255,255,255,.2); letter-spacing: .04em; transition: color var(--trans); }
+    .logo-item:hover { color: rgba(255,255,255,.5); }
+
+    /* ── SECTIONS SHARED ────────────────────────────── */
+    section { padding: clamp(80px,10vw,140px) 0; }
+    .section-header { text-align: center; max-width: 640px; margin: 0 auto 70px; }
+    .section-header h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(28px,4vw,46px);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin: 16px 0 18px;
+      line-height: 1.12;
+    }
+    .section-header p { color: var(--muted); font-size: 17px; line-height: 1.75; }
+
+    /* ── SERVICES ───────────────────────────────────── */
+    #services { background: var(--surface); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 30px;
+      transition: border-color var(--trans), transform var(--trans), box-shadow var(--trans);
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity var(--trans);
+    }
+    .service-card:hover { border-color: rgba(0,212,255,.3); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 24px;
+    }
+    .service-card h3 { font-family: var(--ff-head); font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 12px; letter-spacing: -.01em; }
+    .service-card p { color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .service-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 20px; opacity: 0; transition: opacity var(--trans); }
+    .service-card:hover .service-link { opacity: 1; }
+
+    /* ── WHY US ─────────────────────────────────────── */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .why-visual { position: relative; }
+    .why-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .why-panel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: var(--ff-head); font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+    .stat-row { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 20px; }
+    .stat-num { font-family: var(--ff-head); font-size: 52px; font-weight: 800; line-height: 1; color: var(--white); }
+    .stat-unit { font-family: var(--ff-head); font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .stat-label { font-size: 13px; color: var(--muted); }
+    .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+    .bar-item { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+    .bar-label { width: 100px; color: var(--muted); flex-shrink: 0; text-align: right; }
+    .bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), #0088cc); }
+    .bar-pct { width: 36px; text-align: right; color: var(--text); font-weight: 500; }
+    .why-panel-2 {
+      position: absolute;
+      bottom: -28px; right: -28px;
+      background: var(--card);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 14px;
+      padding: 20px 24px;
+      min-width: 200px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .uptime-num { font-family: var(--ff-head); font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .uptime-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .why-points { display: flex; flex-direction: column; gap: 28px; }
+    .why-point { display: flex; gap: 18px; }
+    .why-point-icon { width: 42px; height: 42px; background: var(--accent-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .why-point h4 { font-family: var(--ff-head); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .why-point p { color: var(--muted); font-size: 15px; line-height: 1.65; }
+
+    /* ── PROCESS ────────────────────────────────────── */
+    #process { background: var(--surface); }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 0; position: relative;
+    }
+    .process-steps::before {
+      content:'';
+      position:absolute; top:36px; left: calc(12.5% + 20px); right: calc(12.5% + 20px);
+      height:1px; background: linear-gradient(90deg, var(--accent-dim), rgba(0,212,255,.3), var(--accent-dim));
+      pointer-events: none;
+    }
+    .step { text-align: center; padding: 0 20px; }
+    .step-num {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid rgba(0,212,255,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-head); font-size: 24px; font-weight: 800; color: var(--accent);
+      margin: 0 auto 24px; position: relative; z-index: 1;
+      box-shadow: 0 0 30px rgba(0,212,255,.12);
+    }
+    .step h3 { font-family: var(--ff-head); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .step p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── TESTIMONIALS ───────────────────────────────── */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .testimonial {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+    .stars { color: #f59e0b; font-size: 15px; margin-bottom: 18px; letter-spacing: 2px; }
+    .testimonial blockquote { color: var(--text); font-size: 15px; line-height: 1.75; font-style: italic; margin-bottom: 24px; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-dim); border: 1px solid rgba(0,212,255,.2); display: flex; align-items: center; justify-content: center; font-family: var(--ff-head); font-weight: 700; color: var(--accent); font-size: 15px; }
+    .author-name { font-weight: 600; font-size: 14px; color: var(--white); }
+    .author-role { font-size: 12px; color: var(--muted); }
+
+    /* ── CTA / EMAIL CAPTURE ────────────────────────── */
+    #contact {
+      background: var(--surface);
+      position: relative; overflow: hidden;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(0,212,255,.08) 0%, rgba(0,100,200,.06) 100%);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 24px;
+      padding: clamp(48px,8vw,96px) clamp(32px,6vw,80px);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-box::before {
+      content:'';
+      position:absolute; top:-60%; left:50%; transform:translateX(-50%);
+      width:500px; height:500px; border-radius:50%;
+      background: radial-gradient(circle, rgba(0,212,255,.12) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .cta-box h2 { font-family: var(--ff-head); font-size: clamp(26px,4vw,44px); font-weight: 800; letter-spacing: -.03em; color: var(--white); margin: 16px 0 14px; line-height: 1.12; }
+    .cta-box p { color: var(--muted); max-width: 480px; margin: 0 auto 40px; font-size: 17px; }
+
+    /* Email form */
+    .email-form { display: flex; max-width: 480px; margin: 0 auto; gap: 12px; flex-wrap: wrap; }
+    .email-input {
+      flex: 1; min-width: 200px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 15px;
+      outline: none;
+      transition: border-color var(--trans);
+    }
+    .email-input::placeholder { color: var(--muted); }
+    .email-input:focus { border-color: rgba(0,212,255,.5); }
+    .btn-submit {
+      background: var(--accent);
+      color: var(--ink);
+      border: none;
+      padding: 14px 26px;
+      border-radius: 10px;
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: opacity var(--trans), transform var(--trans);
+      white-space: nowrap;
+    }
+    .btn-submit:hover { opacity: .88; transform: translateY(-2px); }
+    .form-note { font-size: 12px; color: var(--muted); margin-top: 14px; }
+    .form-success { display: none; color: var(--accent); font-family: var(--ff-head); font-weight: 700; font-size: 17px; padding: 16px; }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid var(--border);
+      padding: 64px 0 32px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+    .footer-brand p { color: var(--muted); font-size: 14px; line-height: 1.75; max-width: 280px; margin-top: 14px; }
+    .footer-col h4 { font-family: var(--ff-head); font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a { color: rgba(255,255,255,.55); text-decoration: none; font-size: 14px; transition: color var(--trans); }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 32px; border-top: 1px solid var(--border); }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-socials { display: flex; gap: 16px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; text-decoration: none;
+      transition: border-color var(--trans), background var(--trans);
+    }
+    .social-btn:hover { border-color: rgba(0,212,255,.3); background: var(--accent-dim); }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .why-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .process-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">IT</div>
+        Ricky
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#testimonials">Clients</a></li>
+        <li><a href="#contact" class="btn-nav">Get Started</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#why" class="mobile-link">Why Us</a>
+    <a href="#process" class="mobile-link">How It Works</a>
+    <a href="#testimonials" class="mobile-link">Clients</a>
+    <a href="#contact" class="btn-nav mobile-link">Get Started</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow reveal"><span class="tag">Managed IT Services</span></div>
+          <h1 class="hero-h1 reveal" style="transition-delay:.08s">
+            IT that works<br><em>as hard</em><br>as you do.
+          </h1>
+          <p class="hero-sub reveal" style="transition-delay:.16s">
+            IT Ricky delivers enterprise-grade managed services, cybersecurity, and cloud solutions — so your team can focus on what matters, not on IT headaches.
+          </p>
+          <div class="hero-actions reveal" style="transition-delay:.24s">
+            <a href="#contact" class="btn-primary">
+              Get a Free Assessment
+              <span>→</span>
+            </a>
+            <a href="#services" class="btn-ghost">
+              View Services
+            </a>
+          </div>
+          <div class="hero-trust reveal" style="transition-delay:.32s">
+            <div class="trust-item"><span class="trust-icon">✓</span>No long-term contracts</div>
+            <div class="trust-item"><span class="trust-icon">✓</span>24/7 support</div>
+            <div class="trust-item"><span class="trust-icon">✓</span>Fixed monthly pricing</div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" style="transition-delay:.2s">
+          <div class="hero-orb">
+            <div class="orb-ring orb-ring-1"></div>
+            <div class="orb-ring orb-ring-2"></div>
+            <div class="orb-inner">
+              <div class="orb-icon">🛡️</div>
+              <div class="orb-stat">Systems Protected</div>
+            </div>
+          </div>
+          <div class="badge badge-1">
+            <div class="badge-dot"></div>
+            All systems operational
+          </div>
+          <div class="badge badge-2">
+            <div class="badge-dot warn"></div>
+            Threat detected &amp; blocked
+          </div>
+          <div class="badge badge-3">
+            <div class="badge-dot"></div>
+            99.9% uptime maintained
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS -->
+  <div id="logos">
+    <div class="container">
+      <p class="logos-label">Technologies &amp; platforms we manage</p>
+      <div class="logos-track">
+        <div class="logo-item">Microsoft 365</div>
+        <div class="logo-item">AWS</div>
+        <div class="logo-item">Azure</div>
+        <div class="logo-item">Google Cloud</div>
+        <div class="logo-item">Cisco</div>
+        <div class="logo-item">VMware</div>
+        <div class="logo-item">Fortinet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">What We Do</span>
+        <h2>End-to-end IT, covered.</h2>
+        <p>From your first help desk ticket to enterprise security strategy, we've got every layer of your technology stack handled.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="service-icon">🖥️</div>
+          <h3>Managed IT Support</h3>
+          <p>Unlimited help desk access, proactive monitoring, and rapid on-site or remote response. Your team's technology always works — guaranteed.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:.08s">
+          <div class="service-icon">🔐</div>
+          <h3>Cybersecurity</h3>
+          <p>Endpoint protection, threat detection, email filtering, security awareness training, and compliance management to keep your data safe.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:.16s">
+          <div class="service-icon">☁️</div>
+          <h3>Cloud Solutions</h3>
+          <p>Microsoft 365, Azure, AWS, and hybrid cloud architecture — designed, migrated, and managed for peak performance and cost efficiency.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:.24s">
+          <div class="service-icon">🌐</div>
+          <h3>Network &amp; Infrastructure</h3>
+          <p>Firewall management, Wi-Fi optimization, SD-WAN, and VPN solutions that keep your team connected and your network bulletproof.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:.32s">
+          <div class="service-icon">💾</div>
+          <h3>Backup &amp; Disaster Recovery</h3>
+          <p>Automated backups, offsite replication, and tested recovery plans. When the unexpected hits, your business keeps running.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:.4s">
+          <div class="service-icon">📋</div>
+          <h3>Compliance &amp; vCISO</h3>
+          <p>HIPAA, SOC 2, PCI-DSS, and more. Our virtual CISO services provide strategic security leadership without the full-time cost.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-visual reveal">
+          <div class="why-panel">
+            <div class="why-panel-header">
+              <span>📊</span> Monthly Performance
+            </div>
+            <div class="stat-row">
+              <div class="stat-num">8.2</div>
+              <div class="stat-unit">min</div>
+            </div>
+            <div class="stat-label" style="margin-bottom:24px;color:var(--muted);font-size:14px;">Average ticket response time</div>
+            <div class="bar-chart">
+              <div class="bar-item">
+                <div class="bar-label">Response</div>
+                <div class="bar-track"><div class="bar-fill" style="width:96%"></div></div>
+                <div class="bar-pct">96%</div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label">Resolution</div>
+                <div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>
+                <div class="bar-pct">91%</div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label">Satisfaction</div>
+                <div class="bar-track"><div class="bar-fill" style="width:98%"></div></div>
+                <div class="bar-pct">98%</div>
+              </div>
+            </div>
+          </div>
+          <div class="why-panel-2">
+            <div class="uptime-num">99.9%</div>
+            <div class="uptime-label">Average client uptime SLA</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-header" style="text-align:left;margin:0 0 40px" >
+            <span class="tag reveal">Why IT Ricky</span>
+            <h2 class="reveal" style="transition-delay:.08s">We treat your IT like it's our own business.</h2>
+          </div>
+          <div class="why-points">
+            <div class="why-point reveal" style="transition-delay:.12s">
+              <div class="why-point-icon">⚡</div>
+              <div>
+                <h4>Proactive, Not Reactive</h4>
+                <p>We monitor and resolve most issues before you even notice them — stopping problems before they become downtime.</p>
+              </div>
+            </div>
+            <div class="why-point reveal" style="transition-delay:.2s">
+              <div class="why-point-icon">💬</div>
+              <div>
+                <h4>Real People, Real Fast</h4>
+                <p>No bots, no ticket queues that vanish into thin air. A live technician picks up within minutes — every time.</p>
+              </div>
+            </div>
+            <div class="why-point reveal" style="transition-delay:.28s">
+              <div class="why-point-icon">📈</div>
+              <div>
+                <h4>Aligned Incentives</h4>
+                <p>Our flat-rate model means we're incentivized to keep your systems healthy. Fewer problems = better for everyone.</p>
+              </div>
+            </div>
+            <div class="why-point reveal" style="transition-delay:.36s">
+              <div class="why-point-icon">🔒</div>
+              <div>
+                <h4>Security-First Mindset</h4>
+                <p>Every recommendation we make considers security implications. It's baked into every service we provide — not sold separately.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">How It Works</span>
+        <h2>Up and running in days, not months.</h2>
+        <p>Our streamlined onboarding gets you protected and supported without disrupting your business.</p>
+      </div>
+      <div class="process-steps">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h3>Free Assessment</h3>
+          <p>We audit your current environment — infrastructure, security gaps, and support pain points — at no cost to you.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.1s">
+          <div class="step-num">2</div>
+          <h3>Custom Plan</h3>
+          <p>We design a tailored service plan and pricing that fits your team size, industry, and risk profile.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.2s">
+          <div class="step-num">3</div>
+          <h3>Smooth Onboarding</h3>
+          <p>Our team deploys agents, documents your environment, and gets your team onboarded — typically within 5 business days.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.3s">
+          <div class="step-num">4</div>
+          <h3>24/7 Partnership</h3>
+          <p>From day one, you have a dedicated account manager and a full team watching over your systems around the clock.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Client Stories</span>
+        <h2>Trusted by businesses that can't afford downtime.</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Since switching to IT Ricky, our IT issues have dropped by 80%. The team is responsive, knowledgeable, and genuinely cares about our business — not just closing tickets."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">SJ</div>
+            <div>
+              <div class="author-name">Sarah J.</div>
+              <div class="author-role">Operations Director, Nexcore Logistics</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial reveal" style="transition-delay:.1s">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Their cybersecurity team caught a phishing attempt before any of our staff even saw it. The protection is invisible until you need it — then it's invaluable."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">MR</div>
+            <div>
+              <div class="author-name">Marcus R.</div>
+              <div class="author-role">CEO, Redfield Law Group</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial reveal" style="transition-delay:.2s">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Flat monthly pricing means no surprise invoices. We finally have predictable IT costs and a team that feels like part of our company. Total game changer."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">AT</div>
+            <div>
+              <div class="author-name">Amanda T.</div>
+              <div class="author-role">CFO, Brightline Medical</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / EMAIL CAPTURE -->
+  <section id="contact">
+    <div class="container">
+      <div class="cta-box reveal">
+        <span class="tag">Get Started Today</span>
+        <h2>Ready for IT that just works?</h2>
+        <p>Drop your email and we'll reach out to schedule your free, no-obligation IT assessment — usually within one business day.</p>
+
+        <div id="emailFormWrap">
+          <form class="email-form" id="emailForm" novalidate>
+            <input
+              type="email"
+              class="email-input"
+              id="emailInput"
+              placeholder="your@company.com"
+              required
+              autocomplete="email"
+            />
+            <button type="submit" class="btn-submit">Get Free Assessment</button>
+          </form>
+          <p class="form-note">No spam. No sales pressure. Just a friendly conversation.</p>
+        </div>
+        <div class="form-success" id="formSuccess">
+          ✓ &nbsp;You're on the list! We'll be in touch within one business day.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo" style="text-decoration:none">
+            <div class="logo-mark">IT</div>
+            Ricky
+          </a>
+          <p>Enterprise-grade managed IT services for businesses that demand reliability, security, and a true technology partner.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Managed IT Support</a></li>
+            <li><a href="#services">Cybersecurity</a></li>
+            <li><a href="#services">Cloud Solutions</a></li>
+            <li><a href="#services">Network &amp; Infrastructure</a></li>
+            <li><a href="#services">Backup &amp; Recovery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#why">About Us</a></li>
+            <li><a href="#process">How It Works</a></li>
+            <li><a href="#testimonials">Case Studies</a></li>
+            <li><a href="#contact">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@itricky.com">hello@itricky.com</a></li>
+            <li><a href="tel:+17025550100">(702) 555-0100</a></li>
+            <li><a href="#contact">Free Assessment</a></li>
+            <li><a href="#contact">Client Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 IT Ricky. All rights reserved. · <a href="#" style="color:var(--muted);text-decoration:none">Privacy Policy</a> · <a href="#" style="color:var(--muted);text-decoration:none">Terms</a></div>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── NAV SCROLL ────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    // ── HAMBURGER ─────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ── SCROLL REVEAL ─────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    // ── EMAIL FORM ────────────────────────────────────
+    const form    = document.getElementById('emailForm');
+    const wrap    = document.getElementById('emailFormWrap');
+    const success = document.getElementById('formSuccess');
+    const input   = document.getElementById('emailInput');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = input.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        input.style.borderColor = 'rgba(239,68,68,.6)';
+        input.focus();
+        return;
+      }
+      input.style.borderColor = '';
+
+      // ── CRM HOOK: Replace this fetch with your CRM endpoint ──
+      // e.g. HubSpot Forms API, Mailchimp, Klaviyo, Pipedrive, etc.
+      // Example (HubSpot):
+      // await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/PORTAL_ID/FORM_GUID`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ fields: [{ name: 'email', value: email }] })
+      // });
+      console.log('Email captured:', email); // Replace with real CRM call
+
+      wrap.style.display = 'none';
+      success.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
