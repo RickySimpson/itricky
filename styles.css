@@ -38,6 +38,12 @@
 .price-layout .plan-description{min-height:0}
 .website-plan .price{margin-top:24px}
 .care-plan .price{font-size:44px;margin-top:24px}
+.care-plan{align-self:start;background:#1f3652;padding:24px}
+.care-benefit{font-size:22px;font-weight:800;line-height:1.35;letter-spacing:-.025em;margin-top:20px}
+.care-allowance{font-size:15px;font-weight:800;line-height:1.6;margin-top:20px}
+.care-choice .check-visual{flex-shrink:0}
+.hosting-note{border-top:1px solid #6c819d;margin-top:24px;padding-top:20px;font-size:14px;line-height:1.7;max-width:58ch}
+.hosting-note>p+p{color:var(--light-ink);margin-top:8px}
 .plan-label{flex-wrap:wrap}
 .plan-label>span{font-size:14px}
 .package-note{font-size:14px;color:var(--light-ink);margin-top:8px;max-width:48ch}
@@ -45,6 +51,8 @@
 @media(max-width:760px){.price-layout{grid-template-columns:1fr}}
 .section-intro{font-size:16px;color:var(--muted);max-width:35ch;margin-top:24px}
 .faq h2{max-width:14ch}
+/* Leave room for the 3px focus outline and its 6px offset. */
+.questions details>div{padding-top:12px}
 .contact-details .contact-plan{font-weight:800;color:var(--ink);margin-top:24px}
 .contact-details>.button{margin-top:18px}
 .contact-details .contact-note{font-size:14px;line-height:1.6;margin-top:12px}

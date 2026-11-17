@@ -11,7 +11,7 @@ function updatePlan() {
   recurring.textContent = withCare ? 'Plus optional care: $20/month.' : 'Care is optional at $20/month.';
   summary.append(price, recurring);
   const subject = withCare ? 'My $500 website + $20/month care inquiry' : 'My $500 website inquiry';
-  const body = 'Hi Ricky,\n\nI’d like to talk about a website for my business.\n\nBusiness name: \nWhat we do: \nCurrent website (if any): \n' + (withCare ? '\nI’m also interested in the optional $20/month care plan.\n' : '');
+  const body = 'Hi Ricky,\n\nI\'d like to discuss a website for my business.\n\nBusiness name:\nServices I want more inquiries about:\nCurrent website, if any:\n' + (withCare ? '\nI’m also interested in the optional $20/month care plan.\n' : '');
   const href = `mailto:design@itricky.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   inquiries.forEach(link => { link.href = href; });
   contactPlan.textContent = withCare
